@@ -12,8 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
- final  TextEditingController _loginController = TextEditingController();
- final  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _loginController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,8 @@ class _LoginPageState extends State<LoginPage> {
                               minimumSize: const Size(100, 40),
                               backgroundColor: Colors.deepPurpleAccent),
                           onPressed: () {
-                            if (_loginController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
+                            if (_loginController.text.isNotEmpty &&
+                                _passwordController.text.isNotEmpty) {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => const MyHomePage(),
                               ));

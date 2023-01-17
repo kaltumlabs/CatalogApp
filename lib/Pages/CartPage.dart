@@ -82,7 +82,7 @@ class _CartProductState extends State<CartProduct> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),
                               Text(
-                                  "${value.CartProductList.fold(0, (previousValue, element) => previousValue + element.price)}",
+                                  "\$${value.CartProductList.fold(0, (previousValue, element) => previousValue + element.price)}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),

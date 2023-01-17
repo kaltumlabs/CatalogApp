@@ -105,7 +105,9 @@ class ListItemWidget extends StatelessWidget {
   ListItemWidget({Key? key, required this.product, required bool isFavScreen})
       : super(key: key);
   final Product product;
-  late bool isFavScreen = false;
+
+  get isFavScreen => null;
+  // late bool isFavScreen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -117,25 +119,29 @@ class ListItemWidget extends StatelessWidget {
             side: BorderSide(color: Colors.white54),
             borderRadius: BorderRadius.all(Radius.circular(20))),
         elevation: 1,
-        child: ListTile(
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => DetailProduct(product: product))),
-          leading: Image.network(product.imgUrl),
-          title: Text(
-            product.name,
-            style: const TextStyle(overflow: TextOverflow.ellipsis),
-          ),
-          subtitle: Text(
-            "\$${product.price}",
-            style: const TextStyle(
-              fontFamily: 'Open Sans',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+        child: Expanded(
+          child: ListTile(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => DetailProduct(product: product))),
+            leading: Image.network(product.imgUrl),
+            title: Text(
+              product.name,
+              style: const TextStyle(overflow: TextOverflow.ellipsis),
             ),
-          ),
-          trailing: isFavScreen == true
-              ? IconButton(
+            subtitle: Text(
+              "\$${product.price}",
+              style: const TextStyle(
+                fontFamily: 'Open Sans',
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
                   onPressed: () {
                     product.isFavorite = !product.isFavorite;
                     Provider.of<FavProductProvider>(context, listen: false)
@@ -147,8 +153,8 @@ class ListItemWidget extends StatelessWidget {
                           color: Colors.pink,
                         )
                       : const Icon(Icons.favorite_border),
-                )
-              : ElevatedButton(
+                ),
+                ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateColor.resolveWith(
                           (states) => Colors.white),
@@ -163,6 +169,9 @@ class ListItemWidget extends StatelessWidget {
                       ? const Icon(Icons.add_shopping_cart)
                       : const Icon(Icons.remove_shopping_cart),
                 ),
+              ],
+            ),
+          ),
         ),
       ),
     );

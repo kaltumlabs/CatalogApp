@@ -1,3 +1,4 @@
+import 'package:codepur/Pages/PaymentPage.dart';
 import 'package:codepur/Provider/FavProvider.dart';
 import 'package:codepur/Widgets/Item_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +18,7 @@ class _CartProductState extends State<CartProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Cart Page'),
         elevation: 0,
@@ -82,13 +84,22 @@ class _CartProductState extends State<CartProduct> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),
                               Text(
-                                  "${value.CartProductList.fold(0, (previousValue, element) => previousValue + element.price)}",
+                                  "\$${value.CartProductList.fold(0, (previousValue, element) => previousValue + element.price)}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold)),
                             ]),
                             ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (value.CartProductList.isEmpty) {
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PaymentPage(),
+                                        ));
+                                  }
+                                },
                                 child: const Text("Buy now",
                                     style: TextStyle(fontSize: 14)))
                           ],

@@ -6,6 +6,7 @@ import 'package:codepur/Widgets/Item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'detailProduct.dart';
 
@@ -17,6 +18,25 @@ class FavProduct extends StatefulWidget {
 }
 
 class _FavProductState extends State<FavProduct> {
+  // bool isLoading = false;
+  // void shimmerFunc() {
+  //   Future.delayed(
+  //       const Duration(seconds: 2),
+  //       () => {
+  //             setState(() {
+  //               isLoading = true;
+  //               isOneTime = false;
+  //             })
+  //           });
+  // }
+  //
+  // bool isOneTime = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +60,18 @@ class _FavProductState extends State<FavProduct> {
                     ),
                   ),
                 )
+              // : isLoading == true
+              //     ? Padding(
+              //         padding: const EdgeInsets.symmetric(horizontal: 20),
+              //         child: SizedBox(
+              //             width: double.maxFinite,
+              //             height: 40,
+              //             child: VxShimmer(
+              //                 child: Container(
+              //               decoration:
+              //                   BoxDecoration(color: Colors.blueGrey.shade200),
+              //             ))),
+              //       )
               : ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,

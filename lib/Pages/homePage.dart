@@ -7,6 +7,7 @@ import 'package:codepur/Pages/detailProduct.dart';
 import 'package:codepur/Pages/loginPage.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -19,6 +20,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isLoading = false;
+  void shimmerFunc() {
+    Future.delayed(
+        const Duration(seconds: 2),
+        () => {
+              setState(() {
+                isLoading = true;
+                isShimming = true;
+              })
+            });
+  }
+
+  bool isShimming = false;
+
+  @override
+  void initState() {
+    isShimming == false ? shimmerFunc() : null;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,14 +81,20 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  "Catalog App".text.xl4.bold.make(),
-                  "Treading products".text.xl.bold.make(),
+                  VxShimmer(
+                    primaryColor: Colors.black,
+                    child: "Catalog App".text.xl4.black.bold.make(),
+                  ),
+                  VxShimmer(
+                    primaryColor: Colors.black,
+                    child: "Treading products".text.xl.bold.make(),
+                  ),
                 ],
               ),
             ),
             VxSwiper.builder(
               itemCount: 10,
-              height: 200,
+              height: kIsWeb ? 400 : 200,
               aspectRatio: 16 / 9,
               viewportFraction: 0.8,
               initialPage: 0,
@@ -83,16 +110,30 @@ class _MyHomePageState extends State<MyHomePage> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 final product = myProducts[index];
-                return Container(
-                  child: InkWell(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => DetailProduct(product: product))),
-                    child: Image.network(
-                      product.imgUrl,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                );
+                return isLoading == false
+                    ? SizedBox(
+                        width: double.maxFinite,
+                        height: 100.0,
+                        child: VxShimmer(
+                            child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey.shade200,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12)),
+                          ),
+                        )))
+                    : Container(
+                        child: InkWell(
+                          onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailProduct(product: product))),
+                          child: Image.network(
+                            product.imgUrl,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      );
               },
             ),
             const SizedBox(
@@ -110,17 +151,24 @@ class _MyHomePageState extends State<MyHomePage> {
               itemCount: myProducts.length,
               itemBuilder: (context, index) {
                 final product = myProducts[index];
-                return InkWell(
-                  child: ItemWidget(product: product),
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              DetailProduct(product: product))),
-                );
+                return isLoading == false
+                    ? Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: SizedBox(
+                            width: double.maxFinite / 2,
+                            height: 100.0,
+                            child: VxShimmer(
+                                child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20)),
+                                  color: Colors.blueGrey.shade200),
+                            ))),
+                      )
+                    : ItemWidget(product: product);
               },
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
+                  crossAxisCount: kIsWeb ? 4 : 2),
             ),
             // ListView.builder(
             //   physics: const NeverScrollableScrollPhysics(),

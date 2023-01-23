@@ -5,6 +5,10 @@ import 'package:flutter/foundation.dart';
 import '../Model/ProductModel.dart';
 
 class FavProductProvider extends ChangeNotifier {
+  void isBuy() {
+    notifyListeners();
+  }
+
   final List<Product> _favProductList = [];
   // HashSet<dynamic> favProductList = HashSet();
   List<Product> get favProductList => _favProductList;
@@ -22,11 +26,16 @@ class FavProductProvider extends ChangeNotifier {
   }
 
   void addToCartProduct(Product product) {
-    if (product.isInCart == true) {
-      _CartProductList.add(product);
-    } else {
-      _CartProductList.remove(product);
-    }
+    _CartProductList.add(product);
+
+    // _CartProductList.remove(product);
+
+    notifyListeners();
+  }
+
+  void removeFromCartProduct(Product product) {
+    _CartProductList.remove(product);
+
     notifyListeners();
   }
 }

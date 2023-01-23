@@ -43,6 +43,9 @@ dependencies:
   dot_navigation_bar: ^1.0.1+4
   provider: ^6.0.5
   badges: ^2.0.3
+  shimmer: ^2.0.0
+  flutter_pay: ^1.0.2
+  stripe_payment: ^1.1.4
 
 dev_dependencies:
   flutter_test:

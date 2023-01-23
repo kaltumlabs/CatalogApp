@@ -1,3 +1,4 @@
+import 'package:codepur/Pages/AddProduct.dart';
 import 'package:codepur/Pages/CartPage.dart';
 import 'package:codepur/Pages/FavouritePage.dart';
 import 'package:codepur/Pages/homePage.dart';
@@ -20,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     const MyHomePage(),
     const FavProduct(),
     const CartProduct(),
-    LoginPage(),
+    const AddProductPage(),
   ];
   void changePage(int index) {
     setState(() {
